@@ -1,15 +1,17 @@
-# Generic Claude Code Skills
+# humanpowers
 
-Reusable skills that apply across all projects. Installed globally to `~/.claude/skills/` via symlinks.
+Lean, composable skills for Claude Code. Installed globally to `~/.claude/skills/` via symlinks.
 
 ## Skills
 
-| Skill | Purpose |
+| Verb | Purpose |
 |---|---|
-| brainstorming | Explore intent, requirements, and design before building |
-| debugging | Hypothesis-driven bug diagnosis |
-| tdd | Test-driven development — red/green/refactor |
-| verify | Evidence-based completion checks |
+| `/ground` | Orient in project state before starting work |
+| `/brainstorm` | Explore design before building — no code until agreed |
+| `/iterate` | TDD cycles with one commit per plan step |
+| `/debug` | Hypothesis-driven bug diagnosis |
+| `/verify` | Evidence-based completion checks |
+| `/deploy` | End-to-end service deploy with health verification |
 
 ## Installation
 
@@ -17,14 +19,10 @@ Reusable skills that apply across all projects. Installed globally to `~/.claude
 just install-skills
 ```
 
-This symlinks each skill folder from `skills/` into `~/.claude/skills/` so Claude Code discovers them globally.
+Symlinks each skill folder from `skills/` into `~/.claude/skills/` for global discovery.
 
 ## Convention
 
-Every repo with Claude Code skills follows the same pattern:
-
-- **Source of truth**: `skills/` directory in the repo (version-controlled)
-- **Discovery**: `.claude/skills/` (symlinks, gitignored)
-- **Install command**: `just install-skills`
-
-Project-specific skills live in their own repo's `skills/` folder and symlink to `<repo>/.claude/skills/`. Generic skills (this repo) symlink to `~/.claude/skills/` for global availability.
+- **Source of truth**: `skills/` directory (version-controlled)
+- **Discovery**: `~/.claude/skills/` (symlinks)
+- **Project extensions**: project-specific skills reference humanpowers as the base methodology
