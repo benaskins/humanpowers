@@ -8,7 +8,7 @@ description: Use when executing an implementation plan. Builds in TDD cycles wit
 Execute a plan one step at a time. Each step is a TDD red/green/refactor cycle that ends with a clean commit.
 
 1. Read the plan. Pick up the next incomplete step. If done, `/deploy` or ship it.
-2. Red/green/refactor. Show test output at each stage.
+2. Red/green/refactor. Show test output at each stage. Run the full test suite before committing, not just the new test.
 3. Run `git status` — surface any unrelated files to the user before staging.
 4. One commit per plan step. Stage only related files. Conventional commit message.
 5. Go to 1.
