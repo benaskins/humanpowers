@@ -12,6 +12,7 @@ Lean, composable skills for Claude Code. Installed globally to `~/.claude/skills
 | `/debug` | Hypothesis-driven bug diagnosis |
 | `/verify` | Evidence-based completion checks |
 | `/deploy` | End-to-end service deploy with health verification |
+| `/tui-iterate` | Bubble Tea TUI changes — model test before every commit |
 
 ## Installation
 
@@ -31,6 +32,7 @@ Symlinks each skill folder from `skills/` into `~/.claude/skills/` for global di
 | Something is broken | `/debug` |
 | Claiming done | `/verify` |
 | Shipping to production | `/deploy` |
+| Changing a Bubble Tea UI | `/tui-iterate` |
 
 ## Convention
 
