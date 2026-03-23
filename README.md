@@ -2,7 +2,7 @@
 
 Lean, composable skills for Claude Code. Not superpowers — humanpowers.
 
-Six skills, all under 20 lines, designed to be used as verbs.
+Seven skills, all under 20 lines, designed to be used as verbs.
 
 ## The chain
 
@@ -27,6 +27,7 @@ Two standalone workflows chain in when needed:
 | `/brainstorm` | Explore the design space through conversation — no code until agreed |
 | `/iterate` | Execute a plan in TDD red/green/refactor cycles, one commit per step |
 | `/debug` | Hypotheses before fixes, boring explanations before clever ones |
+| `/audit` | Examine evidence against user instructions and baseline quality factors |
 | `/verify` | Show evidence, not assertions |
 | `/deploy` | Deploy services end-to-end with health verification |
 
@@ -46,9 +47,9 @@ This means invoking any skill can pull in the others naturally. You can also ent
 Humanpowers skills are generic. Project-specific skills extend them with local tool knowledge:
 
 ```
-/aurelia-debug  → follows /debug, adds aurelia CLI commands
-/aurelia-deploy → follows /deploy, adds aurelia service mesh steps
-/lamina-workspace → extends /ground, adds lamina workspace tools
+/debug-lamina  → follows /debug, adds lamina doctor and deps
+/deploy-lamina → follows /deploy, adds lamina release workflow
+/ground-lamina → extends /ground, adds lamina repo/deps/doctor
 ```
 
 To write a project extension, create a skill that says "Follow `/deploy` — here's how each step works with [your tool]."

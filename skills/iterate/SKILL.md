@@ -9,9 +9,10 @@ Execute a plan one step at a time. Each step is a TDD red/green/refactor cycle t
 
 1. Read the plan. Pick up the next incomplete step. If done, `/deploy` or ship it.
 2. Red/green/refactor. Show test output at each stage. Run the full test suite before committing, not just the new test.
-3. Run `git status` — surface any unrelated files to the user before staging.
-4. One commit per plan step. Stage only related files. Conventional commit message.
-5. Go to 1.
+3. `/simplify` the change before committing.
+4. Run `git status` — surface any unrelated files to the user before staging.
+5. One commit per plan step. Stage only related files. Conventional commit message.
+6. Go to 1.
 
 Stop and surface to the user if:
 - A step reveals a design question the plan didn't anticipate
