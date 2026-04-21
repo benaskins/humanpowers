@@ -13,9 +13,10 @@ Ground yourself in the current project state before starting any work.
 4. Run `git status` in each repo in the current workspace — summarize what's in progress
 5. Check for uncommitted changes, stale branches, or in-flight work
 6. Run `git log --oneline -10` to show recent work and provide context on where the project left off
-7. Run the project's test suite and report results — flag any pre-existing failures
-8. Summarize the current state concisely
-9. Do NOT start any work until the user confirms
+7. Check GitHub for open issues and PRs: `gh issue list -L 20` and `gh pr list -L 20` — flag anything that looks related to the likely task, assigned to the user, or recently updated
+8. Run the project's test suite and report results — flag any pre-existing failures
+9. Summarize the current state concisely
+10. Do NOT start any work until the user confirms
 
 Once grounded, `/brainstorm` the task.
 
