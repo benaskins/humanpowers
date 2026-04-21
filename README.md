@@ -2,7 +2,7 @@
 
 Lean, composable skills for Claude Code. Not superpowers — humanpowers.
 
-Seven skills, all under 20 lines, designed to be used as verbs.
+Eight skills, all under 20 lines, designed to be used as verbs.
 
 ## The chain
 
@@ -24,6 +24,7 @@ Two standalone workflows chain in when needed:
 | Verb | What it does |
 |---|---|
 | `/ground` | Orient in project state before starting work |
+| `/triage` | Review open issues and PRs across the workspace to decide what needs action |
 | `/brainstorm` | Explore the design space through conversation — no code until agreed |
 | `/iterate` | Execute a plan in TDD red/green/refactor cycles, one commit per step |
 | `/debug` | Hypotheses before fixes, boring explanations before clever ones |

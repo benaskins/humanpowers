@@ -13,7 +13,7 @@ Ground yourself in the current project state before starting any work.
 4. Run `git status` in each repo in the current workspace — summarize what's in progress
 5. Check for uncommitted changes, stale branches, or in-flight work
 6. Run `git log --oneline -10` to show recent work and provide context on where the project left off
-7. Check GitHub for open issues and PRs: `gh issue list -L 20` and `gh pr list -L 20` — flag anything that looks related to the likely task, assigned to the user, or recently updated
+7. Check GitHub for open work in each repo: `gh issue list` and `gh pr list` — just show counts and titles. If this is the start of a session, suggest `/triage` for a deeper pass.
 8. Run the project's test suite and report results — flag any pre-existing failures
 9. Summarize the current state concisely
 10. Do NOT start any work until the user confirms
