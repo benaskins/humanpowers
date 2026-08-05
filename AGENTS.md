@@ -11,8 +11,6 @@ Lean, composable skills for Claude Code. Installed globally to `~/.claude/skills
 | `/brainstorm` | Explore design before building — no code until agreed |
 | `/iterate` | TDD cycles with one commit per plan step |
 | `/debug` | Hypothesis-driven bug diagnosis |
-| `/audit` | Examine evidence against user instructions and baseline quality factors |
-| `/verify` | Evidence-based completion checks |
 | `/deploy` | Ship services one at a time, each confirmed serving before the next |
 
 ## Installation
@@ -32,8 +30,6 @@ Symlinks each skill folder from `skills/` into `~/.claude/skills/` for global di
 | User exploring an idea | `/brainstorm` |
 | User has a plan | `/iterate` |
 | Something is broken | `/debug` |
-| Reviewing code, logs, or output | `/audit` |
-| Claiming done | `/verify` |
 | Shipping to production | `/deploy` |
 
 ## Convention
