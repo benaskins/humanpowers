@@ -70,6 +70,12 @@ This symlinks each skill into `~/.claude/skills/` for global availability.
 - **Trust the LLM.** Don't explain what TDD is. Don't list rationalization red flags. State the process, not the pedagogy.
 - **Compose as verbs.** Skills are actions, not documents. `/ground`, `/brainstorm`, `/iterate` — not "grounding-checklist", "brainstorming-framework", "implementation-methodology".
 - **Stay lean.** If a skill is over 20 lines, it's trying to do too much. The right amount of instruction is the minimum that changes behaviour.
+- **Script the collection, prompt the judgement.** Where a step is a fixed set of
+  commands, ship the script and let the skill spend its words on what the output
+  means. `/ground` used to list ten commands to run per repo, which is ten chances
+  to vary the query, skip a repo, or run something destructive. It now runs
+  `gather.sh` and reads one report. A skill should tell the agent what to conclude,
+  not what to type.
 - **Extend, don't fork.** Project-specific skills reference humanpowers as the base methodology, adding only the tool-specific knowledge the agent needs.
 
 ## License
