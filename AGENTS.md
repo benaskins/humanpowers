@@ -13,7 +13,7 @@ Lean, composable skills for Claude Code. Installed globally to `~/.claude/skills
 | `/debug` | Hypothesis-driven bug diagnosis |
 | `/audit` | Examine evidence against user instructions and baseline quality factors |
 | `/verify` | Evidence-based completion checks |
-| `/deploy` | End-to-end service deploy with health verification |
+| `/deploy` | Ship services one at a time, each confirmed serving before the next |
 
 ## Installation
 
