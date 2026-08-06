@@ -61,17 +61,24 @@ checkout_kind() {
     echo "main checkout"
 }
 
-# All three counts come from one `git status --porcelain`, so they agree with the
+# Every count comes from one `git status --porcelain`, so they agree with the
 # listing below them. Counting untracked files with `ls-files --others` instead
 # reports every file inside an untracked directory, while `git status` collapses
 # that directory to one line, and the two numbers then contradict each other on
 # screen.
+#
+# Returns four numbers: staged, unstaged, untracked, and changed paths. The fourth
+# is not the sum of the first three. A file that is staged and then modified again
+# is `MM`, one path counted in two categories, so the sum overstates how much there
+# is to look at. Anything measuring the size of the change uses the fourth.
 dirty_summary() {
-    local repo="$1"
-    git -C "$repo" status --porcelain 2>/dev/null | awk '
+    local status="$1"
+    printf '%s' "$status" | awk '
+        NF == 0 { next }
+        { paths++ }
         /^\?\?/ { untracked++; next }
         { if (substr($0,1,1) != " ") staged++; if (substr($0,2,1) != " ") unstaged++ }
-        END { printf "%d %d %d", staged+0, unstaged+0, untracked+0 }'
+        END { printf "%d %d %d %d", staged+0, unstaged+0, untracked+0, paths+0 }'
 }
 
 divergence() {
@@ -140,12 +147,17 @@ printf '%-12s %s\n' "vs origin" "$(divergence "$root" "$base")"
 
 echo
 echo "== WORKING TREE"
-read -r staged unstaged untracked <<<"$(dirty_summary "$root")"
-echo "staged=$staged unstaged=$unstaged untracked=$untracked"
-if (( staged + unstaged + untracked > 0 )); then
-    git status --short | head -20
-    total=$((staged + unstaged + untracked))
-    (( total > 20 )) && echo "... $((total - 20)) more"
+# Captured once, then counted and printed from the variable. Piping git into
+# `head` risks SIGPIPE on a large status, and `set -o pipefail` turns that into a
+# failed pipeline that kills the script.
+status="$(git status --porcelain 2>/dev/null || true)"
+read -r staged unstaged untracked changed <<<"$(dirty_summary "$status")"
+echo "staged=$staged unstaged=$unstaged untracked=$untracked ($changed path(s))"
+if (( changed > 0 )); then
+    printf '%s\n' "$status" | head -20
+    if (( changed > 20 )); then
+        echo "... $((changed - 20)) more"
+    fi
 fi
 
 echo
@@ -175,8 +187,8 @@ if [[ ${#nested[@]} -gt 0 ]]; then
         [[ "$nb" == "HEAD" ]] && nb="(detached)"
         nbase="$(cd "$d" && default_branch)"
         div="$(divergence "$d" "$nbase")"
-        read -r s u t <<<"$(dirty_summary "$d")"
-        dirt=$((s + u + t))
+        nstatus="$(git -C "$d" status --porcelain 2>/dev/null || true)"
+        read -r _ _ _ dirt <<<"$(dirty_summary "$nstatus")"
         ahead="$(printf '%s' "$div" | grep -oE '[0-9]+ ahead' | grep -oE '^[0-9]+' || true)"
         if [[ "$dirt" -eq 0 && "$nb" != "(detached)" && "${ahead:-0}" == "0" && "$div" != "?" ]]; then
             quiet=$((quiet + 1))
@@ -184,7 +196,9 @@ if [[ ${#nested[@]} -gt 0 ]]; then
         fi
         printf '%-52s %-30s %-22s %s\n' "$d" "$nb" "$div" "$dirt"
     done
-    (( quiet > 0 )) && echo "($quiet more: clean, attached, nothing origin does not have)"
+    if (( quiet > 0 )); then
+        echo "($quiet more: clean, attached, nothing origin does not have)"
+    fi
     echo "(figures from each repo's last fetch; this script fetches only the repo it runs in)"
 fi
 
@@ -239,4 +253,10 @@ if [[ -n "$behind" && "$behind" != "0" ]]; then
     echo "- $behind commit(s) behind origin/$base. Anything you read here may be stale."
     warned=1
 fi
-(( warned == 0 )) && echo "none"
+# An `if` rather than `(( warned == 0 )) && echo "none"`. Under `set -e` a failing
+# arithmetic test as the last statement makes the script exit 1, so the exit status
+# would report "this run found warnings" as a failure, and every grounding run in a
+# main checkout would look broken to a caller that checks it.
+if (( warned == 0 )); then
+    echo "none"
+fi
