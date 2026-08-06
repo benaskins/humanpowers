@@ -30,7 +30,7 @@ Two standalone workflows chain in when needed:
 | `/debug` | Hypotheses before fixes, boring explanations before clever ones |
 | `/audit` | Examine evidence against user instructions and baseline quality factors |
 | `/verify` | Show evidence, not assertions |
-| `/deploy` | Deploy services end-to-end with health verification |
+| `/deploy` | Ship services one at a time, each confirmed serving before the next |
 
 ## Composability
 

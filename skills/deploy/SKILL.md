@@ -1,23 +1,25 @@
 ---
 name: deploy
-description: Deploy one or more services end-to-end with health verification
+description: Ship services one at a time, each confirmed serving before the next
 ---
 
 # Deploy
 
-Deploy one or more services end-to-end. Follow every step in order — do NOT proceed to the next service until the current one is verified healthy.
+Ship one service at a time. Do not start the next until this one is confirmed
+serving.
 
-For EACH service:
+1. **Find the project's own deploy path before running anything**: its
+   `AGENTS.md`, its justfile or make targets, its CI workflow. Deploying by hand
+   what CI deploys is how two deploys collide.
+2. Confirm the tree is clean, and that the commit going out is the one you think
+   it is.
+3. Deploy the one service.
+4. **Prove it serves.** Make a request against it. A process that started, a
+   green pipeline, and a box that booted are all things that happen while
+   nothing answers.
+5. Only now, the next service.
 
-1. Run `git status` in all affected repos — commit or stash any uncommitted changes
-2. Build the binary
-3. Install the binary to the target path
-4. Stop existing processes and verify ports are free (check for stale processes)
-5. Verify config paths match between daemon and traefik
-6. Start the service
-7. Run health check — `curl -s` against the health endpoint
-8. Show output proving it works
-
-Only move to the next service after the current one is confirmed healthy. If anything fails, diagnose and fix before proceeding.
+If a step fails, stop and diagnose it. Do not deploy the next service around the
+failure.
 
 $ARGUMENTS
