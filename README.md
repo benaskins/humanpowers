@@ -2,20 +2,20 @@
 
 Lean, composable skills for Claude Code. Not superpowers — humanpowers.
 
-Eight skills, all under 20 lines, designed to be used as verbs.
+Six skills, designed to be used as verbs.
 
 ## The chain
 
 ```
-/ground → /brainstorm → /iterate → /verify
+/ground → /brainstorm → /iterate
 ```
 
-Start by grounding yourself in the project. Brainstorm the design. Iterate through implementation in TDD cycles. Verify with evidence.
+Start by grounding yourself in the project. Brainstorm the design. Iterate through implementation in TDD cycles. Claude Code's own plan mode sits between the last two: `/brainstorm` hands off to it once the direction is agreed.
 
 Two standalone workflows chain in when needed:
 
 ```
-/debug → /verify
+/debug
 /deploy
 ```
 
@@ -25,11 +25,9 @@ Two standalone workflows chain in when needed:
 |---|---|
 | `/ground` | Orient in project state before starting work |
 | `/triage` | Review open issues and PRs across the workspace to decide what needs action |
-| `/brainstorm` | Explore the design space through conversation — no code until agreed |
+| `/brainstorm` | Explore the design space through conversation, no code until agreed |
 | `/iterate` | Execute a plan in TDD red/green/refactor cycles, one commit per step |
 | `/debug` | Hypotheses before fixes, boring explanations before clever ones |
-| `/audit` | Examine evidence against user instructions and baseline quality factors |
-| `/verify` | Show evidence, not assertions |
 | `/deploy` | Ship services one at a time, each confirmed serving before the next |
 
 ## Composability
@@ -37,11 +35,10 @@ Two standalone workflows chain in when needed:
 Skills reference each other as verbs:
 
 - `/ground` finishes with "now `/brainstorm`"
-- `/brainstorm` starts with "`/ground` yourself first" and finishes with "now `/iterate`"
-- `/debug` ends with "`/verify`"
+- `/brainstorm` starts with "`/ground` yourself first" and finishes with "now `/plan`, then `/iterate`"
 - `/iterate` ships with "`/deploy`"
 
-This means invoking any skill can pull in the others naturally. You can also enter the chain at any point — `/iterate` works fine without `/brainstorm` if you already have a plan.
+This means invoking any skill can pull in the others naturally. You can also enter the chain at any point: `/iterate` works fine without `/brainstorm` if you already have a plan.
 
 ## Extending with project skills
 
@@ -69,7 +66,8 @@ This symlinks each skill into `~/.claude/skills/` for global availability.
 
 - **Trust the LLM.** Don't explain what TDD is. Don't list rationalization red flags. State the process, not the pedagogy.
 - **Compose as verbs.** Skills are actions, not documents. `/ground`, `/brainstorm`, `/iterate` — not "grounding-checklist", "brainstorming-framework", "implementation-methodology".
-- **Stay lean.** If a skill is over 20 lines, it's trying to do too much. The right amount of instruction is the minimum that changes behaviour.
+- **Stay lean.** The right amount of instruction is the minimum that changes behaviour. Twenty lines is the smell test: past that, a skill is usually explaining what the model already knows, or holding mechanics that belong in a script beside it.
+- **Retire what the model already does.** `/verify` and `/audit` lived here until the frontier models stopped needing to be told to show evidence or to check their own work. A skill that only restates default behaviour costs a description line at startup and buys nothing. Re-read this set whenever the models move.
 - **Script the collection, prompt the judgement.** Where a step is a fixed set of
   commands, ship the script and let the skill spend its words on what the output
   means. `/ground` used to list ten commands to run per repo, which is ten chances

@@ -5,15 +5,10 @@ description: Use when diagnosing bugs, test failures, or unexpected behavior. Re
 
 # Debug
 
-Diagnose before you fix. Hypotheses before changes. Boring explanations before clever ones.
+1. Reproduce the user's exact experience — same protocol, same URL, same path.
+2. Form 3 hypotheses ranked by likelihood. Start boring: config, typos, cached state, stale build.
+3. Run one cheap check per hypothesis. Share what you found before proposing a fix.
 
-1. Reproduce the user's exact experience — same protocol, same URL, same path
-2. Read the error messages and logs before theorising
-3. Form 3 hypotheses ranked by likelihood — start boring (config, typos, cached state)
-4. Run one quick check per hypothesis, then share what you found
-5. Only propose a fix after evidence points to a root cause
-6. Apply the minimal fix, then `/verify`
-
-If your approach fails twice, stop and reassess — you're missing context.
+If your approach fails twice, stop and reassess — you're missing context, not cleverness.
 
 $ARGUMENTS
